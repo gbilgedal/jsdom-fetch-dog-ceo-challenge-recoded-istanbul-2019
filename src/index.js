@@ -1,5 +1,5 @@
 
-document.addEventListener("DOMContentLoad", function(e) {
+document.addEventListener("DOMContentLoaded", function(e) {
   fetch("https://dog.ceo/api/breeds/image/random/4").then(function(response) {
   return response.json();
 })

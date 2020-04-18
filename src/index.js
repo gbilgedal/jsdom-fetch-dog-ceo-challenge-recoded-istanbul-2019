@@ -5,6 +5,6 @@ document.addEventListener("DOMContentLoad", function(e) {
   return response.json();
 })
 .then(function(json){
-  
+
 })
 });

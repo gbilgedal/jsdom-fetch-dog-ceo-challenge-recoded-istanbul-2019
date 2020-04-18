@@ -1,22 +1,36 @@
+console.log('%c HI', 'color: firebrick')
+const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
+const breedUrl = "https://dog.ceo/api/breeds/list/all"
 
-document.addEventListener("DOMContentLoaded", function(e) {
-  fetch("https://dog.ceo/api/breeds/image/random/4").then(function(response) {
-  return response.json();
-})
-.then(function(json){
-  json.message.forEach(image => renderImage(image);
-})
+document.addEventListener("DOMContentLoaded", function() {
+  fetchImages();
+  fetchBreeds();
+
+  document.getElementById('breed-dropdown').addEventListener("change", (event) => {
+    let breedList = document.querySelector('#dog-breeds')
+    while (breedList.firstChild) breedList.removeChild(breedList.firstChild)
+    fetchBreeds();
+  });
 });
+
+function fetchImages() {
+  fetch(imgUrl)
+  .then(res => res.json())
+  .then(results => {
+    results.message.forEach(image => renderImage(image))
+  });
+}
+
 function renderImage(url) {
-  const div = document.getElementById('dog-image-container');
-  const image = document.createElement("img");
-  image.src = url;
-  div.appendChild(image);
+  const container = document.querySelector('#dog-image-container');
+  const image = document.createElement("img")
+  image.src = url
+  container.appendChild(image)
 }
 
 function fetchBreeds() {
   fetch(breedUrl)
-  .then(response => response.json())
+  .then(res => res.json())
   .then(results => {
     let breeds = Object.keys(results.message);
     breeds.forEach(breed => renderBreed(breed))
@@ -25,7 +39,7 @@ function fetchBreeds() {
 }
 
 function renderBreed(breed) {
-  const breedList = document.getElementById('#dog-breeds')
+  const breedList = document.querySelector('#dog-breeds')
   const dogBreed = document.createElement("li")
   const dropdown = document.getElementById('breed-dropdown')
   dogBreed.innerText = breed
